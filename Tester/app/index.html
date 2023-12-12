@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Freshservice App</title>
+    <!-- Include Freshservice App API -->
+    <script src="https://assets.freshdesk.com/apps-sdk/fresh-client.js"></script>
+</head>
+<body>
+    <!-- Content of your app -->
+    <button id="update-button">Update</button>
+
+    <script>
+        // Initialize Freshservice App API
+        app.initialized().then(function (_client) {
+            var client = _client;
+
+            // Add a listener for the update button click
+            document.getElementById('update-button').addEventListener('click', function () {
+                // Display a message prompt
+                client.interface.trigger('showModal', {
+                    title: 'Update Confirmation',
+                    template: '<p>Your message or prompt goes here.</p>',
+                    buttons: [{
+                        label: 'OK',
+                        type: 'primary'
+                    }, {
+                        label: 'Cancel',
+                        type: 'default'
+                    }]
+                }).then(function (data) {
+                    // Handle button clicks
+                    if (data.buttonValue === 'OK') {
+                        // User clicked OK
+                        console.log('User clicked OK');
+                    } else {
+                        // User clicked Cancel or closed the modal
+                        console.log('User clicked Cancel or closed the modal');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
